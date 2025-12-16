@@ -3,13 +3,16 @@
 Node.js + Express + MongoDB backend for ride-sharing with JWT, Clerk OAuth, Stripe payments, SMTP OTP, and GeoJSON search. Uses ES modules and Vitest for tests.
 
 ## Quick start
+
 1. Install deps: `npm install`
 2. Copy env: `cp .env.example .env` and fill values.
 3. Run dev: `npm run dev`
 4. Run tests: `npm test`
 
 ## Environment
+
 See [.env.example](.env.example) for all required keys:
+
 - Mongo: `MONGODB_URI`
 - Auth: `JWT_SECRET`, `JWT_REFRESH_SECRET`
 - SMTP: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`
@@ -19,6 +22,7 @@ See [.env.example](.env.example) for all required keys:
 - Google Maps: `GOOGLE_MAPS_API_KEY`
 
 ## Key integrations
+
 - **Clerk OAuth**: Call `/api/auth/login` after obtaining Clerk session; map `clerkId` in `User`. Token verification stub in `src/config/clerk.js`.
 - **JWT access/refresh**: 15m access, 30d refresh with rotation and hashing in `RefreshToken` collection.
 - **OTP email**: `/api/auth/otp/request` sends 6-digit code via Nodemailer SMTP; verify with `/api/auth/otp/verify`.
@@ -30,6 +34,7 @@ See [.env.example](.env.example) for all required keys:
 - **Biometric stub**: `/api/auth/biometric` accepts `userId`, `deviceId` and returns JWTs; add device attestation before production.
 
 ## API routes (prefix `/api`)
+
 - **Auth**: POST `/auth/signup`, `/auth/login`, `/auth/otp/request`, `/auth/otp/verify`, `/auth/refresh`, `/auth/logout`, `/auth/biometric`
 - **Users**: GET `/users/:id`, PATCH `/users/:id`, GET `/users` (nearby)
 - **Drivers**: POST `/drivers/ride`, GET `/drivers/rides`, PATCH `/drivers/ride/:id`
@@ -37,6 +42,7 @@ See [.env.example](.env.example) for all required keys:
 - **Admin**: GET `/admin/dashboard`, PATCH `/admin/kyc/:userId`, GET `/admin/reports`
 
 ## Sample requests
+
 ```bash
 # Signup
 curl -X POST http://localhost:4000/api/auth/signup \
@@ -53,15 +59,18 @@ curl -X POST http://localhost:4000/api/drivers/ride \
 ```
 
 ## Testing
+
 - Unit tests live in `/tests` and use Vitest with lightweight mocks (no DB needed). Run `npm test`.
 
 ## Docker
+
 ```
 docker build -t joyride-backend .
 docker run -p 4000:4000 --env-file .env joyride-backend
 ```
 
 ## Notes
+
 - Routes are protected via `requireAuth` and role checks where needed.
 - Validation uses Zod in `src/validators`.
 - Errors standardize to JSON `{ error: { message, details } }` with real HTTP codes.

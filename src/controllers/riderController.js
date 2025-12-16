@@ -15,7 +15,9 @@ export const bidController = asyncHandler(async (req, res) => {
   const { offerPrice } = req.validated.body;
   const bid = await placeBid(id, req.user.id, offerPrice);
   try {
-    getIo().to(`ride:${id}`).emit('bid:placed', { bidId: bid.id, rideId: id, offerPrice, riderId: req.user.id });
+    getIo()
+      .to(`ride:${id}`)
+      .emit('bid:placed', { bidId: bid.id, rideId: id, offerPrice, riderId: req.user.id });
   } catch (err) {
     // socket not initialized or other non-critical issues
   }

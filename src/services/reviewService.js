@@ -2,7 +2,12 @@ import { Review } from '../models/index.js';
 import { AppError } from '../utils/errors.js';
 
 export async function leaveReview(rideId, reviewerId, revieweeId, payload) {
-  const review = await Review.create({ ride: rideId, reviewer: reviewerId, reviewee: revieweeId, ...payload });
+  const review = await Review.create({
+    ride: rideId,
+    reviewer: reviewerId,
+    reviewee: revieweeId,
+    ...payload
+  });
   return review;
 }
 

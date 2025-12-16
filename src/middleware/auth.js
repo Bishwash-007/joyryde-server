@@ -17,9 +17,11 @@ export async function requireAuth(req, res, next) {
   }
 }
 
-export const requireRole = (...roles) => (req, _res, next) => {
-  if (!req.user || !roles.includes(req.user.role)) {
-    return next(new AppError(403, 'Forbidden'));
-  }
-  next();
-};
+export const requireRole =
+  (...roles) =>
+  (req, _res, next) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      return next(new AppError(403, 'Forbidden'));
+    }
+    next();
+  };

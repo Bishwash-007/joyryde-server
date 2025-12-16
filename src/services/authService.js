@@ -1,7 +1,12 @@
 import bcrypt from 'bcryptjs';
 import { User, RefreshToken } from '../models/index.js';
 import { AppError } from '../utils/errors.js';
-import { hashToken, signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/token.js';
+import {
+  hashToken,
+  signAccessToken,
+  signRefreshToken,
+  verifyRefreshToken
+} from '../utils/token.js';
 import { createOtp, verifyOtp } from './otpService.js';
 import { mailer } from '../config/mailer.js';
 import { otpEmailTemplate } from '../utils/emailTemplates.js';
@@ -66,7 +71,7 @@ export async function logout(userId, refreshToken) {
 }
 
 export async function requestOtp(email) {
-  const user = await User.findOne({ email }) || (await User.create({ email }));
+  const user = (await User.findOne({ email })) || (await User.create({ email }));
   const { code, expiresAt } = await createOtp(user.id);
   const template = otpEmailTemplate(code);
   await mailer.sendMail({

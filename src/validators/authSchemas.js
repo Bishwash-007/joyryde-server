@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const signupSchema = z.object({
   body: z.object({
-    email: z.string().email(),
+    email: z.email(),
     password: z.string().min(8),
     role: z.enum(['rider', 'driver']).optional(),
     phone: z.string().optional()
@@ -10,15 +10,15 @@ export const signupSchema = z.object({
 });
 
 export const loginSchema = z.object({
-  body: z.object({ email: z.string().email(), password: z.string() })
+  body: z.object({ email: z.email(), password: z.string() })
 });
 
 export const otpRequestSchema = z.object({
-  body: z.object({ email: z.string().email() })
+  body: z.object({ email: z.email() })
 });
 
 export const otpVerifySchema = z.object({
-  body: z.object({ email: z.string().email(), code: z.string().length(6) })
+  body: z.object({ email: z.email(), code: z.string().length(6) })
 });
 
 export const refreshSchema = z.object({

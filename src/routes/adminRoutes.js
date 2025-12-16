@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { dashboardController, kycController, reportsController } from '../controllers/adminController.js';
+import {
+  dashboardController,
+  kycController,
+  reportsController
+} from '../controllers/adminController.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
 
 const router = Router();

@@ -14,7 +14,11 @@ export const dashboardController = asyncHandler(async (_req, res) => {
 export const kycController = asyncHandler(async (req, res) => {
   const { userId } = req.params;
   const { status, notes } = req.body;
-  const user = await User.findByIdAndUpdate(userId, { 'kyc.status': status, 'kyc.notes': notes }, { new: true });
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { 'kyc.status': status, 'kyc.notes': notes },
+    { new: true }
+  );
   if (!user) throw new AppError(404, 'User not found');
   res.json(user);
 });

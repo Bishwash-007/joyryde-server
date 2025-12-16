@@ -15,7 +15,11 @@ const RideSchema = new mongoose.Schema(
     destination: { type: GeoPointSchema, required: true },
     seatsAvailable: { type: Number, default: 1 },
     price: { type: Number, required: true },
-    status: { type: String, enum: ['open', 'in_progress', 'completed', 'cancelled'], default: 'open' },
+    status: {
+      type: String,
+      enum: ['open', 'in_progress', 'completed', 'cancelled'],
+      default: 'open'
+    },
     departureTime: { type: Date }
   },
   { timestamps: true }

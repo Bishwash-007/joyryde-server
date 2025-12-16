@@ -12,8 +12,7 @@ export const env = {
   clerkSecret: process.env.CLERK_SECRET_KEY || 'clerk-secret',
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || 'cloud-name',
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || 'cloud-key',
-  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || 'cloud-secret',
-  googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || 'maps-api-key'
+  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || 'cloud-secret'
 };
 
 export const isDev = env.nodeEnv !== 'production';

@@ -8,7 +8,7 @@ export const createRideSchema = z.object({
     destination: geoPoint,
     seatsAvailable: z.number().min(1),
     price: z.number().positive(),
-    departureTime: z.string().datetime().optional()
+    departureTime: z.datetime().optional()
   })
 });
 

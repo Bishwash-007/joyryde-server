@@ -16,7 +16,12 @@ export async function createOtp(userId) {
 
 export async function verifyOtp(userId, code) {
   const hashed = hashToken(code);
-  const otp = await OtpCode.findOne({ user: userId, code: hashed, consumed: false, expiresAt: { $gt: new Date() } });
+  const otp = await OtpCode.findOne({
+    user: userId,
+    code: hashed,
+    consumed: false,
+    expiresAt: { $gt: new Date() }
+  });
   if (!otp) return false;
   otp.consumed = true;
   await otp.save();

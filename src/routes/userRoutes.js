@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import {
-	getUserController,
-	updateUserController,
-	nearbyUsersController,
+  getUserController,
+  updateUserController,
+  nearbyUsersController,
   uploadAvatarController,
   uploadKYCController
 } from '../controllers/userController.js';
@@ -15,7 +15,19 @@ const router = Router();
 
 router.get('/:id', requireAuth, validate(getUserSchema), getUserController);
 router.patch('/:id', requireAuth, validate(updateUserSchema), updateUserController);
-router.patch('/:id/avatar', requireAuth, upload.single('file'), validate(getUserSchema), uploadAvatarController);
-router.patch('/:id/kyc', requireAuth, upload.single('file'), validate(getUserSchema), uploadKYCController);
+router.patch(
+  '/:id/avatar',
+  requireAuth,
+  upload.single('file'),
+  validate(getUserSchema),
+  uploadAvatarController
+);
+router.patch(
+  '/:id/kyc',
+  requireAuth,
+  upload.single('file'),
+  validate(getUserSchema),
+  uploadKYCController
+);
 
 export default router;

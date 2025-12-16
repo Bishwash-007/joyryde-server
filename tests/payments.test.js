@@ -3,7 +3,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 vi.mock('../src/config/stripe.js', () => ({
   stripeClient: {
     paymentIntents: {
-      create: vi.fn().mockResolvedValue({ id: 'pi_123', client_secret: 'secret', status: 'requires_payment_method' })
+      create: vi
+        .fn()
+        .mockResolvedValue({
+          id: 'pi_123',
+          client_secret: 'secret',
+          status: 'requires_payment_method'
+        })
     }
   }
 }));

@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import { uploadRidePhotoController, uploadVehiclePhotoController } from '../controllers/uploadController.js';
+import {
+  uploadRidePhotoController,
+  uploadVehiclePhotoController
+} from '../controllers/uploadController.js';
 import { requireAuth } from '../middleware/auth.js';
 import { upload } from '../middleware/upload.js';
 
