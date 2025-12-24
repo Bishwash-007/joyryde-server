@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, select: false },
     phone: { type: String },
-    role: { type: String, enum: ['rider', 'driver', 'admin'], default: 'rider' },
+    role: { type: String, enum: ['customer', 'rider', 'driver', 'admin'], default: 'customer' },
     profile: {
       name: { type: String },
       avatarUrl: { type: String }

@@ -106,6 +106,38 @@ curl -G http://localhost:4000/api/users \
   --data-urlencode "radiusKm=5"
 ```
 
+## Customers
+
+- Get customer profile
+
+```bash
+curl -X GET http://localhost:4000/api/customers/profile \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+- Update customer profile
+
+```bash
+curl -X PUT http://localhost:4000/api/customers/profile \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","phone":"+1234567890","avatarUrl":"https://example.com/avatar.jpg"}'
+```
+
+- Get customer ride history
+
+```bash
+curl -X GET http://localhost:4000/api/customers/rides \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+- Delete customer account
+
+```bash
+curl -X DELETE http://localhost:4000/api/customers/account \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
 ## Drivers
 
 - Create ride
