@@ -33,6 +33,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, select: false },
     phone: { type: String },
+    emailVerifiedAt: { type: Date },
     role: { type: String, enum: ['customer', 'rider', 'driver', 'admin'], default: 'customer' },
     profile: {
       name: { type: String },

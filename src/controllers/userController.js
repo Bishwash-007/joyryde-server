@@ -15,6 +15,11 @@ export const updateUserController = asyncHandler(async (req, res) => {
   res.json(user);
 });
 
+export const updateSelfController = asyncHandler(async (req, res) => {
+  const user = await updateUser(req.user.id, req.validated.body);
+  res.json(user);
+});
+
 export const nearbyUsersController = asyncHandler(async (req, res) => {
   const users = await findNearbyUsers(req.validated.query);
   res.json(users);

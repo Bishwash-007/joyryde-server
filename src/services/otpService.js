@@ -14,16 +14,20 @@ export async function createOtp(userId) {
   return { code, expiresAt };
 }
 
-export async function verifyOtp(userId, code) {
+export async function verifyOtp(userId, code, session) {
   const hashed = hashToken(code);
-  const otp = await OtpCode.findOne({
+  let query = OtpCode.findOne({
     user: userId,
     code: hashed,
     consumed: false,
     expiresAt: { $gt: new Date() }
   });
+  if (session) {
+    query = query.session(session);
+  }
+  const otp = await query;
   if (!otp) return false;
   otp.consumed = true;
-  await otp.save();
+  await otp.save({ session });
   return true;
 }

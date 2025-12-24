@@ -9,7 +9,9 @@ import { logger } from './config/logger.js';
 const app = express();
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(

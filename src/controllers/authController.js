@@ -1,16 +1,19 @@
 import { asyncHandler } from '../utils/asyncHandler.js';
 import {
-  signup,
   login,
   refreshSession,
   logout,
   requestOtp,
   verifyOtpLogin,
-  biometricLogin
+  biometricLogin,
+  completeSignup,
+  requestPasswordReset,
+  resendPasswordResetOtp,
+  resetPasswordWithOtp
 } from '../services/authService.js';
 
-export const signupController = asyncHandler(async (req, res) => {
-  const result = await signup(req.validated.body);
+export const completeSignupController = asyncHandler(async (req, res) => {
+  const result = await completeSignup(req.validated.body);
   res.status(201).json(result);
 });
 
@@ -40,6 +43,23 @@ export const requestOtpController = asyncHandler(async (req, res) => {
 export const verifyOtpController = asyncHandler(async (req, res) => {
   const { email, code } = req.validated.body;
   const result = await verifyOtpLogin(email, code);
+  res.json(result);
+});
+
+export const forgotPasswordController = asyncHandler(async (req, res) => {
+  const { email } = req.validated.body;
+  const result = await requestPasswordReset(email);
+  res.json({ success: true, ...result });
+});
+
+export const resendForgotPasswordController = asyncHandler(async (req, res) => {
+  const { email } = req.validated.body;
+  const result = await resendPasswordResetOtp(email);
+  res.json({ success: true, ...result });
+});
+
+export const resetPasswordController = asyncHandler(async (req, res) => {
+  const result = await resetPasswordWithOtp(req.validated.body);
   res.json(result);
 });
 

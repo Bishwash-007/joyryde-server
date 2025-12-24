@@ -5,14 +5,6 @@ Replace `<TOKEN>` with a valid Bearer JWT, `<REFRESH>` with refresh token, and I
 
 ## Auth
 
-- Signup
-
-```bash
-curl -X POST http://localhost:4000/api/auth/signup \
-  -H "Content-Type: application/json" \
-  -d '{"email":"user@example.com","password":"Password1!","role":"rider"}'
-```
-
 - Login
 
 ```bash
@@ -35,6 +27,38 @@ curl -X POST http://localhost:4000/api/auth/otp/request \
 curl -X POST http://localhost:4000/api/auth/otp/verify \
   -H "Content-Type: application/json" \
   -d '{"email":"user@example.com","code":"123456"}'
+```
+
+- Complete signup (verify email + set password)
+
+```bash
+curl -X POST http://localhost:4000/api/auth/otp/complete \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","code":"123456","password":"Password1!","name":"Jane Rider","phone":"+15551234"}'
+```
+
+- Forgot password (initial OTP)
+
+```bash
+curl -X POST http://localhost:4000/api/auth/password/forgot \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com"}'
+```
+
+- Re-request password OTP (after expiry)
+
+```bash
+curl -X POST http://localhost:4000/api/auth/password/forgot/resend \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com"}'
+```
+
+- Reset password with OTP
+
+```bash
+curl -X POST http://localhost:4000/api/auth/password/reset \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","code":"123456","password":"NewPass1!"}'
 ```
 
 - Refresh token
@@ -78,6 +102,15 @@ curl -X PATCH http://localhost:4000/api/users/<USER_ID> \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{"phone":"+1234567890"}'
+```
+
+- Update my personal info
+
+```bash
+curl -X PATCH http://localhost:4000/api/users/me \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"profile":{"name":"Alex"},"phone":"+123456789"}'
 ```
 
 - Upload avatar
