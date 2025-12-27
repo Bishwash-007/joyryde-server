@@ -90,7 +90,6 @@ export async function requestOtp(email) {
   const user = (await User.findOne({ email })) || (await User.create({ email }));
   const { code, expiresAt } = await createOtp(user.id);
   await sendOtpEmail(email, code);
-  logger.info(`Sent OTP ${code} to ${email}`);
   return { expiresAt };
 }
 
