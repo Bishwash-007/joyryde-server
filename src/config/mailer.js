@@ -1,41 +1,17 @@
 import nodemailer from 'nodemailer';
-import { isDev } from './env.js';
+import { env } from './env.js';
 
-let mailer;
+const transporter = nodemailer.createTransport({
+  host: env.smtpHost,
+  port: env.smtpPort || 587,
+  secure: env.smtpSecure ?? false,
+  auth:
+    env.smtpUser && env.smtpPass
+      ? {
+          user: env.smtpUser,
+          pass: env.smtpPass
+        }
+      : undefined
+});
 
-async function createMailer() {
-  if (isDev) {
-    // Use Ethereal Email for development (free test service)
-    const testAccount = await nodemailer.createTestAccount();
-    return nodemailer.createTransport({
-      host: testAccount.smtp.host,
-      port: testAccount.smtp.port,
-      secure: testAccount.smtp.secure,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass
-      }
-    });
-  }
-  // Production: configure with SendGrid, Mailgun, or your email service
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-}
-
-export async function verifyMailer() {
-  try {
-    mailer = await createMailer();
-    await mailer.verify();
-  } catch (error) {
-    // Non-fatal in dev, but log for visibility
-    // eslint-disable-next-line no-console
-    console.error('Email setup failed', error);
-  }
-}
-
-export { mailer };
+export default transporter;

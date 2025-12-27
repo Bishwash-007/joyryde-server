@@ -9,20 +9,30 @@ import {
   verifyRefreshToken
 } from '../utils/token.js';
 import { createOtp, verifyOtp } from './otpService.js';
-import { mailer } from '../config/mailer.js';
+import transporter from '../config/mailer.js';
+import { logger } from '../config/logger.js';
 import { otpEmailTemplate } from '../utils/emailTemplates.js';
 import { addMinutes } from './time.js';
 
 const SALT_ROUNDS = 10;
 
+import { env } from '../config/env.js';
+
 async function sendOtpEmail(email, code) {
   const template = otpEmailTemplate(code);
-  await mailer.sendMail({
-    to: email,
-    from: 'cyborgnotpsycho@gmail.com',
-    subject: template.subject,
-    html: template.html
-  });
+  try {
+    await transporter.sendMail({
+      to: email,
+      from: env.emailFrom,
+      subject: template.subject,
+      html: template.html
+    });
+  } catch (error) {
+    logger.error(
+      `Failed to send OTP email: ${error && error.stack ? error.stack : error} | email: ${email} | code: ${code}`
+    );
+    throw new AppError(500, 'Failed to send OTP email');
+  }
 }
 
 async function saveRefreshToken(userId, refreshToken, session) {
@@ -80,6 +90,7 @@ export async function requestOtp(email) {
   const user = (await User.findOne({ email })) || (await User.create({ email }));
   const { code, expiresAt } = await createOtp(user.id);
   await sendOtpEmail(email, code);
+  logger.info(`Sent OTP ${code} to ${email}`);
   return { expiresAt };
 }
 

@@ -36,6 +36,7 @@ export const logoutController = asyncHandler(async (req, res) => {
 
 export const requestOtpController = asyncHandler(async (req, res) => {
   const { email } = req.validated.body;
+  console.log("Request OTP for email:", email);
   const result = await requestOtp(email);
   res.json({ success: true, ...result });
 });
